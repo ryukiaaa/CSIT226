@@ -1,3 +1,9 @@
+<?php 
+	session_start();
+
+	$_SESSION['kya2'] = 'session value';
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,44 +17,80 @@
 
 			background-color: #1F1717;
 			background-image: url('music.png');
-			background-size: 200px;
+			background-size: 150px;
+			backdrop-filter: 
 			color: #FCF5ED;
-/*			display: flex;*/
+			display: flex;
 			text-align: center;
 			align-content: center;
 		}
 		.container{
- 	 	position: absolute;
 
-	 	 left: 25%;
-	  	transform: translate(-50%,-50%);
-	 	 background-color: rgba(206, 90, 103,0.8);
-			width: 35%;
+	 	    left: 25%;
+	  	    transform: translate(-50%,-50%);
+	 	    background-color: rgba(206, 90, 103,0.8);
+	 	    -webkit-backdrop-filter: blur(10px);
+	 	    backdrop-filter: blur(5px);
+			width: 15%;
 			margin: 27.5%;
+			margin-left: 50%;
 			padding: 5%;
+			padding-top: 2%;
 			border: 5px;
 			border-radius: 10px;
 		}
-		.container .registration{
- 		 display: none;
+	 	.login {
+/*	 		position: absolute;*/
+  			-webkit-transform: perspective(600px) rotateY(0deg);
+  			transform: perspective(600px) rotateY(0deg);
+/*			background-color: rgba(206, 90, 103,0.8);*/
+			filter: none;
+/*			width: 35%;*/
+/*			margin: 27.5%;
+			padding: 5%;
+			border: 5px;*/
+			-webkit-backface-visibility: hidden;
+  		 	backface-visibility: hidden;
+ 		 	transition: -webkit-transform 0.5s linear 0s;
+ 		 	transition: transform 0.5s linear 0s;
 		}
+		.registration {
+/*	 		position: absolute;*/
+  			-webkit-transform: perspective(600px) rotateY(0deg);
+  			transform: perspective(600px) rotateY(0deg);
+/*			background-color: rgba(206, 90, 103,0.8);*/
+			filter: none;
+/*			width: 35%;*/
+/*			margin: 27.5%;
+			padding: 5%;
+			border: 5px;*/
+			
+			-webkit-backface-visibility: hidden;
+  		 	backface-visibility: hidden;
+ 		 	transition: -webkit-transform 0.5s linear 0s;
+ 		 	transition: transform 0.5s linear 0s;
+		}
+
+
+		form {
+			animation: fadeIn ease 1s;
+		}
+
 		#check:checked ~ .registration{
  		display: block;
+ 		-webkit-transform: perspective(600px) rotateY(0deg);
+  		transform: perspective(600px) rotateY(0deg);
+		}
+		.registration{
+ 		 display: none;
 		}
 		#check:checked ~ .login{
-  		display: none;
+  		 -webkit-transform: perspective(600px) rotateY(-180deg);
+  		 transform: perspective(600px) rotateY(-180deg);
+  		 display: none;
 		}
 		#check{
   		display: none;
-		}
-	 	#login {
-			background-color: rgba(206, 90, 103,0.8);
-			filter: none;
-			width: 35%;
-			margin: 27.5%;
-			padding: 5%;
-			border: 5px;
-			border-radius: 10px;
 		}
 		.form input.button{
  		 color: none;
@@ -64,24 +106,37 @@
 			text-decoration: underline;
 			cursor: pointer;
 		}
-
+@keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+30% {
+   opacity:0;
+}
+50% {
+   opacity:20%;
+}
+  100% {
+    opacity:1;
+  }
+}
 
 	</style>
 </head>
 <body>
 <div class="container">
-	<img src="logo.png" width=30%>
+	<img src="logo.png" width=45%>
 <input type="checkbox" id="check">
 <div class="login">
 <h2>LOGIN</h2>
-<pre>
-<form method="post">
-<input type="text" name="txtUsername" placeholder="Username">
+ <pre>
+ <form method="post">
+ <input type="text" name="txtUsername" placeholder="Username">
 
-<input type="password" name="txtPassword" placeholder="Password">
+ <input type="password" name="txtPassword" placeholder="Password">
 
-<input type="submit" id="btnSubmit" name="btnSubmit" value="Login">
-</form>
+  <input type="submit" id="btnSubmit" name="btnSubmit" value="Login">
+     </form>
 </pre>
 <div class="signup">
      <span class="signup">Don't have an account?
@@ -89,7 +144,7 @@
      </span>
  </div>
 </div>
-<div class="registration form">
+<div class="registration">
       <h2>SIGN UP</h2>
       <pre>
 <form method="post">
@@ -133,10 +188,8 @@
 			} else {
 				$row=mysqli_fetch_array($res);
 				if($row['Password']==$pwd){
-					echo "<script language='javascript'>
 					alert('Correct username and password. You are now log in. Have a grate shift!');
-
-					</script>";
+					header('Location: main.php');
 				}else{
 					echo "<script language='javascript'>
 					alert('Incorrect password.');
@@ -149,7 +202,7 @@
 			$row=mysqli_fetch_array($res);
 			if($row['Password']==$pwd)
 				echo "<script language='javascript'>
-				alert('Correct username and password.');
+				alert('Correct username and password. Welcome!!!');
 
 				</script>";
 			else
@@ -184,20 +237,18 @@
 
 				</script>";
 			
-	} else 
-		echo "<script language='javascript'>
-		  alert('Username already exist. Try another Username.');
-
-				</script>"; 
+	} else {
+		alert("Username already exist. Try another Username.");
+	}
 	
 }
 
 
-function alertTest($message) { 
+function alert($message) { 
 echo "<script language='javascript'>
 		  alert('".$message."');
 
-				</script>"
+				</script>";
 }
 ?>
 
