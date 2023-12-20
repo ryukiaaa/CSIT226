@@ -1,7 +1,5 @@
 <?php 
 	session_start();
-
-	$_SESSION['kya2'] = 'session value';
 ?>
 
 <!DOCTYPE html>
@@ -13,85 +11,91 @@
 		* {
 /*	 	 filter: blur(2px);*/
 			}
-		body {
+			body {
+				background-color: #1f1717;
+				background-image: url("music.png");
+				background-size: 150px;
+				backdrop-filter: blur(3px);
+				color: #fcf5ed;
+				display: flex;
+				text-align: center;
+				align-content: center;
+				height: 100vh;
+				margin: 0px;
+				padding: 0px;
+			}
+			.container {
+				background-color: transparent;
+				width: 400px;
+				height: 500px;
+				perspective: 1000px;
+				margin: auto;
+				padding: 5%;
+				padding-top: 2%;
+				border: 5px;
+				border-radius: 10px;
+			}
 
-			background-color: #1F1717;
-			background-image: url('music.png');
-			background-size: 150px;
-			backdrop-filter: 
-			color: #FCF5ED;
-			display: flex;
-			text-align: center;
-			align-content: center;
-		}
-		.container{
+			.container-inner {
+				position: relative;
+				width: 100%;
+				height: 100%;
+				text-align: center;
+				transition: transform 0.8s;
+				transform-style: preserve-3d;
 
-	 	    left: 25%;
-	  	    transform: translate(-50%,-50%);
-	 	    background-color: rgba(206, 90, 103,0.8);
-	 	    -webkit-backdrop-filter: blur(10px);
-	 	    backdrop-filter: blur(5px);
-			width: 15%;
-			margin: 27.5%;
-			margin-left: 50%;
-			padding: 5%;
-			padding-top: 2%;
-			border: 5px;
-			border-radius: 10px;
-		}
-	 	.login {
-/*	 		position: absolute;*/
-  			-webkit-transform: perspective(600px) rotateY(0deg);
-  			transform: perspective(600px) rotateY(0deg);
-/*			background-color: rgba(206, 90, 103,0.8);*/
-			filter: none;
-/*			width: 35%;*/
-/*			margin: 27.5%;
-			padding: 5%;
-			border: 5px;*/
-			-webkit-backface-visibility: hidden;
-  		 	backface-visibility: hidden;
- 		 	transition: -webkit-transform 0.5s linear 0s;
- 		 	transition: transform 0.5s linear 0s;
-		}
-		.registration {
-/*	 		position: absolute;*/
-  			-webkit-transform: perspective(600px) rotateY(0deg);
-  			transform: perspective(600px) rotateY(0deg);
-/*			background-color: rgba(206, 90, 103,0.8);*/
-			filter: none;
-/*			width: 35%;*/
-/*			margin: 27.5%;
-			padding: 5%;
-			border: 5px;*/
-			
-			-webkit-backface-visibility: hidden;
-  		 	backface-visibility: hidden;
- 		 	transition: -webkit-transform 0.5s linear 0s;
- 		 	transition: transform 0.5s linear 0s;
-		}
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
 
+			#check {
+				display: none;
+			}
 
-		form {
-			animation: fadeIn ease 1s;
-		}
+			#check:checked ~ .container-inner {
+				transform: rotateY(180deg);
+			}
 
-		#check:checked ~ .registration{
- 		display: block;
- 		-webkit-transform: perspective(600px) rotateY(0deg);
-  		transform: perspective(600px) rotateY(0deg);
-		}
-		.registration{
- 		 display: none;
-		}
-		#check:checked ~ .login{
-  		 -webkit-transform: perspective(600px) rotateY(-180deg);
-  		 transform: perspective(600px) rotateY(-180deg);
-  		 display: none;
-		}
-		#check{
-  		display: none;
-		}
+			.login,
+			.registration {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				-webkit-backface-visibility: hidden;
+				backface-visibility: hidden;
+
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				flex-direction: column;
+			}
+
+			.login {
+				background-color: rgba(206, 90, 103, 0.8);
+				color: black;
+				border-radius: 10px;
+			}
+
+			.registration {
+				background-color: rgba(206, 90, 103, 0.8);
+				color: #000;
+				transform: rotateY(180deg);
+				border-radius: 10px;
+				padding: 16px;
+			}
+
+			form {
+				display: flex;
+				flex-direction: column;
+				gap: 15px;
+				margin-bottom: 10px;
+				 align-items: center;
+			}
+
+			input[type="submit"] {
+				width: min-content;
+			}
 		.form input.button{
  		 color: none;
  		 background-color: rgba(0, 0, 0,0.8)
@@ -102,70 +106,88 @@
   		cursor: pointer;
   		transition: 0.4s;
 		}
+
 		#Register:hover{
 			text-decoration: underline;
 			cursor: pointer;
 		}
-@keyframes fadeIn {
-  0% {
-    opacity:0;
-  }
-30% {
-   opacity:0;
-}
-50% {
-   opacity:20%;
-}
-  100% {
-    opacity:1;
-  }
-}
 
 	</style>
-</head>
-<body>
-<div class="container">
-	<img src="logo.png" width=45%>
-<input type="checkbox" id="check">
-<div class="login">
-<h2>LOGIN</h2>
- <pre>
- <form method="post">
- <input type="text" name="txtUsername" placeholder="Username">
+	</head>
+	<body>
+		<div class="container">
+			<input type="checkbox" id="check" />
+			<div class="container-inner">
+				<div class="login">
+					<img src="logo.png" width="45%" />
+					<div>
+						<h2>LOGIN</h2>
+						<form method="post">
+							<input type="text" name="txtUsername" placeholder="Username" />
 
- <input type="password" name="txtPassword" placeholder="Password">
+							<input
+								type="password"
+								name="txtPassword"
+								placeholder="Password"
+							/>
 
-  <input type="submit" id="btnSubmit" name="btnSubmit" value="Login">
-     </form>
-</pre>
-<div class="signup">
-     <span class="signup">Don't have an account?
-         <label for="check" id="Register">Register now!</label>
-     </span>
- </div>
-</div>
-<div class="registration">
-      <h2>SIGN UP</h2>
-      <pre>
-<form method="post">
-<input type="text" name="txtUser" placeholder="Enter your email">
+							<input
+								type="submit"
+								id="btnSubmit"
+								name="btnSubmit"
+								value="Login"
+							/>
+						</form>
+						<div class="signup">
+							<span class="signup"
+								>Don't have an account?
+								<label for="check" id="Register">Register now!</label>
+							</span>
+						</div>
+					</div>
+				</div>
 
-<input type="password" name="txtPass" placeholder="Create a password">
+				<div class="registration">
+					<img src="logo.png" width="45%" />
+					<div>
+						<h2>SIGN UP</h2>
+						<form method="post">
+							<input
+								type="text"
+								name="txtUser"
+								placeholder="Enter your username"
+							/>
 
-<input type="password" name="txtConfirm"placeholder="Confirm your password">
+							<input
+								type="password"
+								name="txtPass"
+								placeholder="Create a password"
+							/>
 
-<input type="submit" id="btnRegister" name="btnRegister" value="Register">
-</form>
-  </pre>
-      <div class="signup">
-        <span class="signup">Already have an account?
-         <label for="check" id="Register">Login</label>
-        </span>
-      </div>
-    </div>
-</div>
+							<input
+								type="password"
+								name="txtConfirm"
+								placeholder="Confirm your password"
+							/>
 
-</body>
+							<input
+								type="submit"
+								id="btnRegister"
+								name="btnRegister"
+								value="Register"
+							/>
+						</form>
+						<div class="signup">
+							<span class="signup"
+								>Already have an account?
+								<label for="check" id="Register">Login</label>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
 </html>
 <?php
 	$connect = mysqli_connect("localhost","root","","mj") or die("Unable to connect");
@@ -183,11 +205,11 @@
 
 			echo "<script language='javascript'>
 				alert('Username is not existing.');
-
 				</script>";
 			} else {
 				$row=mysqli_fetch_array($res);
 				if($row['Password']==$pwd){
+					$_SESSION['data'] = $row['StaffID'];
 					alert('Correct username and password. You are now log in. Have a grate shift!');
 					header('Location: main.php');
 				}else{
@@ -200,11 +222,13 @@
 		} else {
 			$sql = "select * from customer where Username='$uname'";
 			$row=mysqli_fetch_array($res);
-			if($row['Password']==$pwd)
+			if($row['Password']==$pwd){
+				$_SESSION['data'] = $row['Username'];
 				echo "<script language='javascript'>
 				alert('Correct username and password. Welcome!!!');
 
 				</script>";
+			}
 			else
 				echo "<script language='javascript'>
 				alert('Incorrect password.');
