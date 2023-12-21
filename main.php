@@ -154,18 +154,18 @@
 				<td>Maintainance ID</td>
 				<td>Maintainance Type</td>
 				<td>Staff ID</td>
+				<td>Date</td>
 				</tr>
 				<?php
 					$connect = mysqli_connect("localhost","root","","mj") or die("Unable to connect");
-						$sql="select * from maintainance";
+						$sql="select * from maintain";
 						$res=mysqli_query($connect,$sql);
-						$row=mysqli_fetch_array($res);
 					while($row=mysqli_fetch_array($res)){
 					echo "<tr>";
-					echo "<td>".$row[0]."</td>";
-					echo "<td>".$row[1]."</td>";
 					echo "<td>".$row[2]."</td>";
 					echo "<td>".$row[3]."</td>";
+					echo "<td>".$row[1]."</td>";
+					echo "<td>".$row[0]."</td>";
 					echo "</tr>";
 				}
            		?>
@@ -178,53 +178,45 @@
 					        <label for="txtStaffid">Staff:</label> <select name="" id="txtStaffid" placeholder="Choose Staff" >
 					        	<?php
 					        		$connect = mysqli_connect("localhost","root","","mj") or die("Unable to connect");
-									$sql = "select * from staff";
+									$sql = "select StaffID from staff";
 									$res = mysqli_query($connect,$sql);
-									$row=mysqli_fetch_array($res);
-
-            						 echo "<option value=".$row[1].">".$row[1]."</option>";
-            						 echo "<option value=".$row[2].">".$row[2]."</option>";
-           							 echo "<option value=".$row[3].">".$row[3]."</option>";
+										while ($row = mysqli_fetch_array($res)) {
+      									  echo "<option value='" . $row['StaffID'] . "'>" . $row['StaffID'] . "</option>";
+  										  }
            						?>
         					</select>
         					<br>
-							<label for="maintainanceId">Maintainance ID:</label> <select name="maintainanceId" id="maintainanceId" placeholder="Choose Maintainance Id">
-            						<?php
-            						$connect = mysqli_connect("localhost","root","","mj") or die("Unable to connect");
-									$sql = "select * from maintainance";
-									$res = mysqli_query($connect,$sql);
-									$row=mysqli_fetch_array($res);
-
-            						 echo "<option value=".$row[1].">".$row[1]."</option>";
-            						 echo "<option value=".$row[2].">".$row[2]."</option>";
-           							 echo "<option value=".$row[3].">".$row[3]."</option>";
-           						?>
-        						</select>
-							<br>
+        					<!-- <label for="maintainanceId">Maintainance ID:</label> 
+							<input
+								type="text"
+								name="txtMaintainanceID"
+								id="maintainanceId"
+								placeholder="Enter maintainanceId"
+							/> -->
+							<!-- <br> -->
 							<label for="maintainanceId">Maintainance Type:</label> <select name="maintainanceType" id="maintainanceType" placeholder="Choose Maintainance Type">
             						 <?php
             						 $connect = mysqli_connect("localhost","root","","mj") or die("Unable to connect");
-									$sql = "select * from maintainance";
+									$sql = "select MaintainanceType, MaintainanceID from maintainance";
 									$res = mysqli_query($connect,$sql);
 									$row=mysqli_fetch_array($res);
-
-            						 echo "<option value=".$row[1].">".$row[1]."</option>";
-            						 echo "<option value=".$row[2].">".$row[2]."</option>";
-           							 echo "<option value=".$row[3].">".$row[3]."</option>";
+										while ($row = mysqli_fetch_array($res)) {
+      									  echo "<option value='" . $row['MaintainanceID'] . "'>" . $row['MaintainanceType'] . "</option>";
+  										  }
            						?>
         						</select>
 
         						<br>
-        					<label for="maintainanceId">Equipment:</label> <select name="maintainanceType" id="maintainanceType" placeholder="Choose Maintainance Type">
+        					<label for="maintainanceId">Equipment:</label> <select name="equip" id="equip" placeholder="Choose equipment">
             						 <?php
             						 $connect = mysqli_connect("localhost","root","","mj") or die("Unable to connect");
 									$sql = "select * from equipment";
 									$res = mysqli_query($connect,$sql);
-									$row=mysqli_fetch_array($res);
 
-            						 echo "<option value=".$row[1].">".$row[1]."</option>";
-            						 echo "<option value=".$row[2].">".$row[2]."</option>";
-           							 echo "<option value=".$row[3].">".$row[3]."</option>";
+            						     while ($row = mysqli_fetch_array($res)) {
+      									  echo "<option value='" . $row['EquipmentType'] . "'>" . $row['EquipmentType']."-".$row['EquipmentID'] . "</option>";
+  										  }
+
            						?>
         						</select>
 							<br>
@@ -240,16 +232,16 @@
 
 
 	if(isset($_POST['btnSubmit'])){
-		$uname = $_POST['txtUser'];
-		$pwd = $_POST['txtPass'];
-		$com = $_POST['txtConfirm'];
-		$sql = "select * from customer where Username='$uname'";
+		$staff = $_POST['txtUser'];
+		$maintainID = $_POST['txtPass'];
+		$maintainType = $_POST['txtConfirm'];
+		$equip = "select * from customer where Username='$uname'";
 		
 
 		$res = mysqli_query($connect,$sql);
 		if(mysqli_num_rows($res)==0){
 			if($pwd==$com){
-			$sql="insert into customer values('$uname','$pwd',NULL,NULL,NULL,NULL)";
+			$sql="insert into maintainance values('$uname','$pwd',NULL,NULL,NULL,NULL)";
 			mysqli_query($connect,$sql);
 			echo "<script language='javascript'>
 					alert('New User saved!');
